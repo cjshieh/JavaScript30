@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-unit="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-unit="px">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base-color" value="#ffc600">
+  </div>
+
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
+  <style>
+
+    :root {
+      --base-color: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      background-color: var(--base-color);
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base-color);
+    }
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body {
+      text-align: center;
+      background: #193549;
+      color: white;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 50px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width:100px;
+    }
+  </style>
+
+  <script>
+    const controlors = document.querySelectorAll('.controls input');
+    console.log(controlors);
+    function handleUpdates() {
+      const suffix = this.dataset.unit || '';
+      console.log(this.name);
+      document.documentElement.style.setProperty(`--${this.name}`, this.value+suffix);
+    }
+
+    // controlors.forEach((controlor) => controlor.addEventListener('input', handleUpdates));
+    controlors.forEach((controlor) => controlor.addEventListener('change', handleUpdates));
+    // for cross- browser, it would better use
+    // ref: https://stackoverflow.com/questions/18544890/onchange-event-on-input-type-range-is-not-triggering-in-firefox-while-dragging/37623959#37623959
+    // ref: https://stackoverflow.com/questions/18544890/onchange-event-on-input-type-range-is-not-triggering-in-firefox-while-dragging
+    controlors.forEach((controlor) => controlor.addEventListener('mousemove', handleUpdates));
+  </script>
+
+</body>
+</html>
