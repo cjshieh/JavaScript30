@@ -39,8 +39,14 @@
 
   <script>
     const panels = document.querySelectorAll('.panel');
+    let lastSelectedPanel = document.querySelector('.panel');
+
     function toggleOpen() {
       // console.log(name);
+      if (lastSelectedPanel !== this) {
+        lastSelectedPanel.classList.remove('open');
+        lastSelectedPanel = this;
+      }
       this.classList.toggle('open');
     }
 
