@@ -21,9 +21,17 @@ function updateButton() {
     : '<i class="fas fa-pause"></i>';
 }
 
-function skip() {
+function skip(e) {
   // console.log(this.dataset.skip);
-  video.currentTime += parseFloat(this.dataset.skip);
+  // right arraw
+  let skipTime = 0;
+  if (e.keyCode === 39)
+    skipTime = document.querySelector(".forward").dataset.skip;
+  else if (e.keyCode === 37)
+    skipTime = document.querySelector(".backward").dataset.skip;
+  else skipTime = this.dataset.skip;
+
+  video.currentTime += parseFloat(skipTime);
 }
 
 function handleRangeUpdate() {
@@ -75,8 +83,25 @@ progress.addEventListener("mouseup", () => (mousedown = false));
 progress.addEventListener("mousemove", e => mousedown && scrub(e));
 
 fullScreen.addEventListener("click", toggleFullScreen);
-document.addEventListener('keydown', (e) => {
-    if (e.keyCode === 13) {
+document.addEventListener(
+  "keydown",
+  e => {
+    switch (e.keyCode) {
+      case 13:
         toggleFullScreen();
+        break;
+      case 32:
+        togglePlay();
+        break;
+      case 39:
+        skip(e);
+        break;
+      case 37:
+        skip(e);
+        break;
+      default:
+        return;
     }
-}, false);
+  },
+  false
+);
