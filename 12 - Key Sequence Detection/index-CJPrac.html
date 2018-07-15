@@ -7,6 +7,28 @@
 </head>
 <body>
 <script>
+  const pressed = [];
+  const secret = ["ArrowUp", "ArrowDown", "ArrowUp", "ArrowDown", "b", "a"];
+
+  window.addEventListener('keyup', (e) => {
+    const compare = function(input, compared) {
+      if (input.length !== compared.length) 
+        return false;
+
+      for(let i=0; i < compared.length; i++) {
+        if(input[i] !== compared[i])
+          return false;
+      }
+      
+      return true;
+    }
+    pressed.push(e.key);
+    //pressed.splice(-secret.length-1, pressed.length - secret.length);
+    pressed.splice(0, pressed.length - secret.length);
+    if (compare(pressed, secret)) {
+      cornify_add();
+    }
+  })
 </script>
 </body>
 </html>
