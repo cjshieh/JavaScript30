@@ -30,6 +30,21 @@
   const itemsList = document.querySelector('.plates');
   const items = [];
 
+  function addItem(e) {
+    // prevent refresh after submitting the form
+    e.preventDefault();
+    const text = this.querySelector('[name=item]').value;
+    const item = {
+      text,
+      done: false
+    };
+
+    items.push(item);
+    // clear the input box text after submitting
+    this.reset();
+  }
+
+  addItems.addEventListener('submit', addItem);
 </script>
 
 
