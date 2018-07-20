@@ -38,10 +38,25 @@
       text,
       done: false
     };
-
     items.push(item);
+    populateList(items, itemsList);
     // clear the input box text after submitting
     this.reset();
+  }
+  /*
+   * In order to design a resilient function, we set up default array and 
+   * desination DOM
+   */
+  function populateList(plates = [], platesList) {
+    platesList.innerHTML = plates.map((plate, i) => {
+      return `
+        <li>
+          <input type="checkbox" data-index=${i} id="item${i}"
+            ${plate.done ? 'checked' : ''} />
+          <label for="item${i}"> ${plate.text} </label>
+        </li>
+      `; 
+    }).join('');
   }
 
   addItems.addEventListener('submit', addItem);
