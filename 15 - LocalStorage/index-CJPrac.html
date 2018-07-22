@@ -61,7 +61,22 @@
     }).join('');
   }
 
+  function toggleDone(e) {
+    // skip when the traget is not input
+    if (!e.target.matches('input')) return;
+    
+    const selected = e.target;
+    const target = items[selected.dataset.index];
+    // originally wrote... not a good idea.
+    // target.done = selected.checked ? true : false;
+    target.done = !target.done;
+    // update local storage
+    localStorage.setItem('items', JSON.stringify(items));
+  }
+
   addItems.addEventListener('submit', addItem);
+  // event delegation
+  itemsList.addEventListener('click', toggleDone);
   populateList(items, itemsList);
 </script>
 
