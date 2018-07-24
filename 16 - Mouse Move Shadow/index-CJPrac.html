@@ -35,6 +35,26 @@
   </style>
 
 <script>
+  const hero = document.querySelector('.hero');
+  const text = hero.querySelector('h1');
+  // determine how shadow text moves
+  const walk = 100; // 100px
+
+  function shadow(e) {
+    // javascript ES6 destructuring syntax
+    const { offsetWidth: width, offsetHeight: height } = hero;
+    let { offsetX: x, offsetY: y } = e;
+    
+    // difference between e.target and e.currentTarget
+    if (this !== e.target) {
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+
+    console.log(x, y);
+  }
+
+  hero.addEventListener('mousemove', shadow);
 </script>
 </body>
 </html>
